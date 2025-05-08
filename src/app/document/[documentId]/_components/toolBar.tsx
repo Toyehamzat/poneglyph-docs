@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/useEditorStore";
 import {
   BoldIcon,
+  CodeIcon,
   ItalicIcon,
   ListTodoIcon,
   LucideIcon,
@@ -13,6 +14,7 @@ import {
   Redo2Icon,
   RemoveFormattingIcon,
   SpellCheckIcon,
+  StrikethroughIcon,
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
@@ -123,6 +125,18 @@ export default function ToolBar() {
         icon: UnderlineIcon,
         isActive: editor?.isActive("underline"),
         onClick: () => editor?.chain().focus().toggleUnderline().run(),
+      },
+      {
+        label: "Strikethrough",
+        icon: StrikethroughIcon,
+        isActive: editor?.isActive("strike"),
+        onClick: () => editor?.chain().focus().toggleStrike().run(),
+      },
+      {
+        label: "Code",
+        icon: CodeIcon,
+        isActive: editor?.isActive("code"),
+        onClick: () => editor?.chain().focus().toggleCode().run(),
       },
     ],
     [
