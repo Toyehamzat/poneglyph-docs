@@ -129,8 +129,8 @@ export default function ToolBar() {
       {
         label: "Comment",
         icon: MessageSquareWarningIcon,
-        onClick: () => console.log("TODO: comment"),
-        isActive: false, //TODO: Enable this functionality
+        onClick: () => editor?.chain().focus().addPendingComment().run(),
+        isActive: editor?.isActive("liveblocksCommentMark"), 
       },
       {
         label: "List Todo",
@@ -166,7 +166,7 @@ export default function ToolBar() {
       <LinkButton />
       <ImageButton />
       <AlignButton />
-     <LineHeightButton/>
+      <LineHeightButton />
       <ListButton />
       {sections[2].map((item) => (
         <ToolBarButton key={item.label} {...item} />
