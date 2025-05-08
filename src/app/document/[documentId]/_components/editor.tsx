@@ -23,12 +23,13 @@ import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import { FontSizeExtensions } from "@/extensions/font-size";
 import { lineHeightExtension } from "@/extensions/line-height";
-import {Ruler} from "./ruler";
+import { Ruler } from "./ruler";
+import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
 export const Editor = () => {
   const { setEditor } = useEditorStore();
-
+  const liveblocksExtension = useLiveblocksExtension();
   const editor = useEditor({
-    immediatelyRender:false,
+    immediatelyRender: false,
     onCreate: ({ editor }) => {
       setEditor(editor);
     },
@@ -54,6 +55,7 @@ export const Editor = () => {
       setEditor(editor);
     },
     extensions: [
+      liveblocksExtension,
       StarterKit,
       lineHeightExtension.configure({
         types: ["heading", "paragraph"],
