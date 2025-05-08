@@ -2,6 +2,8 @@ import React from "react";
 import { Editor } from "./_components/editor";
 import ToolBar from "./_components/toolBar";
 import { Navbar } from "./_components/navbar";
+import { Room } from "./_components/Room";
+
 
 interface DocumentPageProps {
   params: Promise<{ documentId: string }>;
@@ -20,7 +22,9 @@ export default async function page() {
         <ToolBar />
       </div>
       <div className="pt-[114px] print:pt-0">
-        <Editor />
+        <Room>
+          <Editor />
+        </Room>
       </div>
     </div>
   );
