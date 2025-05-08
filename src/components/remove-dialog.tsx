@@ -36,6 +36,8 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
       toast.error(
         error instanceof Error ? error.message : "Failed to delete document"
       );
+      
+      console.log(error);
     } finally {
       setIsRemoving(false);
     }
