@@ -2,8 +2,7 @@ import React from "react";
 import { Editor } from "./_components/editor";
 import ToolBar from "./_components/toolBar";
 import { Navbar } from "./_components/navbar";
-import { Room } from "./room";
-
+import { Room } from "./_components/Room";
 
 interface DocumentPageProps {
   params: Promise<{ documentId: string }>;
