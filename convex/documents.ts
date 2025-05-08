@@ -100,7 +100,9 @@ export const updateById = mutation({
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity();
     if (!user) throw new ConvexError("Unauthorized");
-
+    const organizationRole = (user.organization_role ?? undefined) as
+      | string
+      | undefined;
     const document = await ctx.db.get(args.id);
 
     if (!document) {
@@ -108,8 +110,8 @@ export const updateById = mutation({
     }
 
     const isOwner = document.ownerId === user.subject;
-
-    if (!isOwner) {
+    const isAdmin = organizationRole === "org:admin";
+    if (!isOwner && !isAdmin) {
       throw new ConvexError("Not authorized to perform this action");
     }
     return await ctx.db.patch(args.id, { title: args.title });
