@@ -9,11 +9,7 @@ import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
-import Image from "@tiptap/extension-image";
-import Dropcursor from "@tiptap/extension-dropcursor";
 import ImageResize from "tiptap-extension-resize-image";
-import Paragraph from "@tiptap/extension-paragraph";
-import Text from "@tiptap/extension-text";
 import Underline from "@tiptap/extension-underline";
 import FontFamily from "@tiptap/extension-font-family";
 import { useEditorStore } from "@/store/useEditorStore";
@@ -56,7 +52,9 @@ export const Editor = () => {
     },
     extensions: [
       liveblocksExtension,
-      StarterKit,
+      StarterKit.configure({
+        history: false,
+      }),
       lineHeightExtension.configure({
         types: ["heading", "paragraph"],
         defaultLineHeight: "normal",
@@ -75,11 +73,7 @@ export const Editor = () => {
       TableRow,
       TableHeader,
       TableCell,
-      Image,
-      Dropcursor,
       ImageResize,
-      Paragraph,
-      Text,
       Highlight.configure({ multicolor: true }),
       Link.configure({
         openOnClick: false,
