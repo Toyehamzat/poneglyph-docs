@@ -76,6 +76,10 @@ export const removeById = mutation({
     const user = await ctx.auth.getUserIdentity();
     if (!user) throw new ConvexError("Unauthorized");
 
+    const organizationRole = (user.organization_role ?? undefined) as
+      | string
+      | undefined;
+
     const document = await ctx.db.get(args.id);
 
     if (!document) {
@@ -83,8 +87,9 @@ export const removeById = mutation({
     }
 
     const isOwner = document.ownerId === user.subject;
+    const isAdmin = organizationRole === "org:admin";
 
-    if (!isOwner) {
+    if (!isOwner && !isAdmin) {
       throw new ConvexError("Not authorized to perform this action");
     }
     return await ctx.db.delete(args.id);
