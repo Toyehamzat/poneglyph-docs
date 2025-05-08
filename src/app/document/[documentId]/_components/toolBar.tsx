@@ -137,14 +137,14 @@ export default function ToolBar() {
         icon: CodeIcon,
         isActive: editor?.isActive("code"),
         onClick: () => editor?.chain().focus().toggleCode().run(),
-      },
+      }
     ],
     [
       {
         label: "Comment",
         icon: MessageSquareWarningIcon,
         onClick: () => editor?.chain().focus().addPendingComment().run(),
-        isActive: editor?.isActive("liveblocksCommentMark"), 
+        isActive: editor?.isActive("liveblocksCommentMark"),
       },
       {
         label: "List Todo",
