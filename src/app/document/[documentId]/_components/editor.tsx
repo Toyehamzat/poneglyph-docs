@@ -20,7 +20,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { FontSizeExtensions } from "@/extensions/font-size";
 import { lineHeightExtension } from "@/extensions/line-height";
 import { Ruler } from "./ruler";
-import { useLiveblocksExtension } from "@liveblocks/react-tiptap";
+import { FloatingToolbar, useLiveblocksExtension } from "@liveblocks/react-tiptap";
 import { Threads } from "./Threads";
 export const Editor = () => {
   const { setEditor } = useEditorStore();
@@ -98,6 +98,7 @@ export const Editor = () => {
       <div className="min-w-max flex justify-center w-[816px] py-6 print:py-0 mx-auto print:w-full print:min-w-0 ">
         <EditorContent editor={editor} />
         <Threads editor={editor}/>
+        <FloatingToolbar editor={editor} />
       </div>
     </div>
   );
