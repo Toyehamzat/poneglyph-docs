@@ -26,7 +26,7 @@ export const DocumentsTable = ({
   isLoading,
 }: DocumentsTableProps) => {
   return (
-    <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col gap-5">
+    <div className="max-w-screen-xl mx-auto px-6 md:px-16 py-6 flex flex-col gap-5">
       {documents == undefined || isLoading ? (
         <Table>
           <TableHeader>
