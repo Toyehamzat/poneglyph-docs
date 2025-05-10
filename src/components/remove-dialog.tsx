@@ -34,10 +34,9 @@ export const RemoveDialog = ({ documentId, children }: RemoveDialogProps) => {
       toast.success("The document has been successfully deleted.");
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to delete document"
+        "You don't have permission to delete this document. Only document owners and administrators can delete documents."
       );
-      
-      console.log(error);
+      console.error("Error deleting document:", error);
     } finally {
       setIsRemoving(false);
     }
