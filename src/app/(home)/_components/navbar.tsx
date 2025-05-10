@@ -15,7 +15,7 @@ export const Navbar = () => {
             className="rounded-full"
           />
         </Link>
-        <h3 className="text-xl">Poneglyph Docs</h3>
+        <h3 className="text-xl hidden md:block">Poneglyph Docs</h3>
       </div>
       <SearchInput />
       <div className="flex items-center gap-3 pl-6">
