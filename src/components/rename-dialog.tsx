@@ -42,8 +42,9 @@ export const RenameDialog = ({
       setOpen(false);
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to rename document"
+        "You don't have permission to rename this document. Only document owners and administrators can delete documents."
       );
+      console.log("Error renaming document:", error);
     } finally {
       setIsRenaming(false);
     }
