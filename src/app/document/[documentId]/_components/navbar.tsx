@@ -38,6 +38,7 @@ import { MenubarSubTrigger } from "@radix-ui/react-menubar";
 import { BsFilePdf } from "react-icons/bs";
 import { useEditorStore } from "@/store/useEditorStore";
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { Avatars } from "./avatars";
 
 export const Navbar = () => {
   const [isMac, setIsMac] = useState(false);
@@ -271,6 +272,7 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center gap-3 pl-6">
+        <Avatars />
         <OrganizationSwitcher
           afterCreateOrganizationUrl={"/"}
           afterLeaveOrganizationUrl="/"
