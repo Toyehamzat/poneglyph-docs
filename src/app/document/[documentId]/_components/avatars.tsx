@@ -44,7 +44,7 @@ const AvatarStack = () => {
         }
         setUsers(list.users || []);
       } catch (error) {
-        toast.error((error as string) ?? "Error fetching users");
+        toast.error("Error fetching users");
         console.error("Error fetching users:", error);
       }
     },
