@@ -8,7 +8,7 @@ import {
 } from "@liveblocks/react/suspense";
 import { useParams } from "next/navigation";
 import { FullScreenLoader } from "@/components/fullScreenLoader";
-import { GetUser } from "../action";
+import { GetUser } from "../../../../actions/action";
 import { toast } from "sonner";
 
 type User = {
@@ -25,9 +25,16 @@ export function Room({ children }: { children: ReactNode }) {
     () => async () => {
       try {
         const list = await GetUser();
-        setUsers(list);
+        if (list.isPersonal) {
+          toast.info("This appears to be a personal document");
+          return;
+        } else {
+          toast.info("This appears to be an organization document");
+        }
+
+        setUsers(list.users || []);
       } catch (error) {
-        toast.error("Error fetching users");
+        toast.error((error as string) ?? "Error fetching users");
         console.error("Error fetching users:", error);
       }
     },
@@ -40,7 +47,16 @@ export function Room({ children }: { children: ReactNode }) {
 
   return (
     <LiveblocksProvider
-      authEndpoint="/api/liveblocks-auth"
+      authEndpoint={async () => {
+        const endpoint = "/api/liveblocks-auth";
+        const room = params.documentId as string;
+
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: JSON.stringify({ room }),
+        });
+        return await response.json();
+      }}
       throttle={16}
       resolveUsers={({ userIds }) => {
         return (
