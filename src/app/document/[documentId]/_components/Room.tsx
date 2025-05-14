@@ -8,8 +8,9 @@ import {
 } from "@liveblocks/react/suspense";
 import { useParams } from "next/navigation";
 import { FullScreenLoader } from "@/components/fullScreenLoader";
-import { GetUser } from "../../../../actions/action";
+import { GetDocument, GetUser } from "../../../../actions/action";
 import { toast } from "sonner";
+import { Id } from "../../../../../convex/_generated/dataModel";
 
 type User = {
   id: string;
@@ -34,7 +35,7 @@ export function Room({ children }: { children: ReactNode }) {
 
         setUsers(list.users || []);
       } catch (error) {
-        toast.error((error as string) ?? "Error fetching users");
+        toast.error("Error fetching users");
         console.error("Error fetching users:", error);
       }
     },
@@ -64,7 +65,13 @@ export function Room({ children }: { children: ReactNode }) {
           undefined
         );
       }}
-      resolveRoomsInfo={() => []}
+      resolveRoomsInfo={async ({ roomIds }) => {
+        const documents = await GetDocument(roomIds as Id<"documents">[]);
+        return documents.map((document) => ({
+          id: document.id,
+          name: document.name,
+        }));
+      }}
       resolveMentionSuggestions={({ text }) => {
         let filteredUsers = users;
 
