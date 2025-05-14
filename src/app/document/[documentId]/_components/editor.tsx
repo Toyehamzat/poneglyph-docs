@@ -32,12 +32,15 @@ interface EditorProps {
 }
 
 export const Editor = ({ initialContent }: EditorProps) => {
-  console.log(initialContent)
+  console.log(initialContent);
   const leftMargin = useStorage((root) => root.leftMargin);
   const rightMargin = useStorage((root) => root.rightMargin);
 
   const { setEditor } = useEditorStore();
-  const liveblocksExtension = useLiveblocksExtension({ initialContent });
+  const liveblocksExtension = useLiveblocksExtension({
+    initialContent,
+    offlineSupport_experimental: true,
+  });
   const editor = useEditor({
     immediatelyRender: false,
     onCreate: ({ editor }) => {
