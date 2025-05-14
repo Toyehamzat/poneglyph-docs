@@ -26,12 +26,18 @@ import {
 } from "@liveblocks/react-tiptap";
 import { Threads } from "./Threads";
 import { useStorage } from "@liveblocks/react/suspense";
-export const Editor = () => {
+
+interface EditorProps {
+  initialContent?: string | undefined;
+}
+
+export const Editor = ({ initialContent }: EditorProps) => {
+  console.log(initialContent)
   const leftMargin = useStorage((root) => root.leftMargin);
   const rightMargin = useStorage((root) => root.rightMargin);
 
   const { setEditor } = useEditorStore();
-  const liveblocksExtension = useLiveblocksExtension();
+  const liveblocksExtension = useLiveblocksExtension({ initialContent });
   const editor = useEditor({
     immediatelyRender: false,
     onCreate: ({ editor }) => {
