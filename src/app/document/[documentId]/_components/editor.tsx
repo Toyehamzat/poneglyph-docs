@@ -20,9 +20,16 @@ import TextAlign from "@tiptap/extension-text-align";
 import { FontSizeExtensions } from "@/extensions/font-size";
 import { lineHeightExtension } from "@/extensions/line-height";
 import { Ruler } from "./ruler";
-import { FloatingToolbar, useLiveblocksExtension } from "@liveblocks/react-tiptap";
+import {
+  FloatingToolbar,
+  useLiveblocksExtension,
+} from "@liveblocks/react-tiptap";
 import { Threads } from "./Threads";
+import { useStorage } from "@liveblocks/react/suspense";
 export const Editor = () => {
+  const leftMargin = useStorage((root) => root.leftMargin);
+  const rightMargin = useStorage((root) => root.rightMargin);
+
   const { setEditor } = useEditorStore();
   const liveblocksExtension = useLiveblocksExtension();
   const editor = useEditor({
@@ -84,7 +91,7 @@ export const Editor = () => {
     ],
     editorProps: {
       attributes: {
-        style: "padding-left: 56px; padding-right:56px;",
+        style: `padding-left: ${leftMargin ?? 56}px; padding-right: ${rightMargin ?? 56}px;`,
         class:
           "focus:outline-none print:border-0 border bg-white border-[#C7C7C7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor-text shadow-xl print:shadow-none rounded-lg print:rounded-none",
       },
@@ -97,7 +104,7 @@ export const Editor = () => {
 
       <div className="min-w-max flex justify-center w-[816px] py-6 print:py-0 mx-auto print:w-full print:min-w-0 ">
         <EditorContent editor={editor} />
-        <Threads editor={editor}/>
+        <Threads editor={editor} />
         <FloatingToolbar editor={editor} />
       </div>
     </div>

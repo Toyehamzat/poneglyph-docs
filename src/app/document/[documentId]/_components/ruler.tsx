@@ -1,10 +1,17 @@
 import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 const markers = Array.from({ length: 83 }, (_, i) => i);
+import { useMutation, useStorage } from "@liveblocks/react/suspense";
 
 export const Ruler = () => {
-  const [leftMargin, setLeftMargin] = React.useState(56);
-  const [rightMargin, setRightMargin] = React.useState(56);
+  const leftMargin = useStorage((root) => root.leftMargin) ?? 56;
+  const setLeftMargin = useMutation(({ storage }, position: number) => {
+    storage.set("leftMargin", position);
+  }, []);
+  const rightMargin = useStorage((root) => root.rightMargin);
+  const setRightMargin = useMutation(({ storage }, position: number) => {
+    storage.set("rightMargin", position);
+  }, []);
 
   const [isDraggingLeft, setIsDraggingLeft] = React.useState(false);
   const [isDraggingRight, setIsDraggingRight] = React.useState(false);
@@ -65,10 +72,7 @@ export const Ruler = () => {
       onMouseUp={handleMouseUp}
       className="w-[816px] mx-auto h-6 border-b border-gray-300 flex items-end relative select-none print:hidden"
     >
-      <div
-        className="w-full h-full relative"
-        id="ruler-container"
-      >
+      <div className="w-full h-full relative" id="ruler-container">
         <Marker
           position={leftMargin}
           isLeft={true}
@@ -144,17 +148,11 @@ const Marker = ({
       onMouseDown={onMouseDown}
       onDoubleClick={onDoubleClick}
     >
-      <FaCaretDown className="absolute  left-1/2 top-0 fill-blue-500 transform -translate-x-1/2" />
+      <FaCaretDown className="absolute left-1/2 top-0 fill-blue-500 transform -translate-x-1/2" />
       <div
-        className="absolute left-1/2 top-4 transform -translate-x-1/2"
-        style={{
-          height: "100vh",
-          width: "1px",
-          transform: "scaleX(0.5)",
-          backgroundColor: "#3b72f6",
-          display: isDragging ? "block" : "none",
-          opacity: isDragging ? 1 : 0,
-        }}
+        className={`absolute left-1/2 top-4 w-px h-screen bg-blue-500 transform -translate-x-1/2 transition-opacity duration-100 ${
+          isDragging ? "opacity-100" : "opacity-0"
+        } [background-image:linear-gradient(to_bottom,#3b82f6_4px,transparent_4px)] [background-size:1px_8px] [background-repeat:repeat-y] bg-transparent`}
       />
     </div>
   );
