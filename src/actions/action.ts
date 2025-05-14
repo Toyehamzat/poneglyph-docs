@@ -10,8 +10,14 @@ export async function GetUser() {
     throw new Error("No session claims found");
   }
 
+  const organizationId = (sessionClaims.o as { id: string })?.id;
+
+  if (!organizationId) {
+    return { isPersonal: true };
+  }
+
   const response = await clerk.users?.getUserList({
-    organizationId: [(sessionClaims.o as { id: string })?.id],
+    organizationId: [organizationId],
   });
 
   const users = response.data.map((user) => ({
@@ -21,5 +27,5 @@ export async function GetUser() {
     avatar: user.imageUrl,
   }));
 
-  return users;
+ return { users, isPersonal: false };
 }
