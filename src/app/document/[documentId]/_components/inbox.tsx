@@ -3,7 +3,7 @@
 import React from "react";
 import { ClientSideSuspense } from "@liveblocks/react";
 import { BellIcon } from "lucide-react";
-import {  InboxNotificationList } from "@liveblocks/react-ui";
+import { InboxNotification, InboxNotificationList } from "@liveblocks/react-ui";
 import { useInboxNotifications } from "@liveblocks/react/suspense";
 import {
   DropdownMenu,
@@ -14,7 +14,13 @@ import { Button } from "@/components/ui/button";
 
 export const Inbox = () => {
   return (
-    <ClientSideSuspense fallback={null}>
+    <ClientSideSuspense
+      fallback={
+        <Button variant={"ghost"} className="relative" size={"icon"} disabled>
+          <BellIcon className="size-5" />
+        </Button>
+      }
+    >
       <InboxMenu />
     </ClientSideSuspense>
   );
@@ -35,8 +41,20 @@ const InboxMenu = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-auto">
-        {inboxNotifications?.length === 0 ? (
-          <InboxNotificationList></InboxNotificationList>
+        {inboxNotifications?.length > 0 ? (
+          <InboxNotificationList>
+            {inboxNotifications?.map(
+              (inboxNotification) => (
+                console.log(inboxNotification),
+                (
+                  <InboxNotification
+                    key={inboxNotification.id}
+                    inboxNotification={inboxNotification}
+                  />
+                )
+              )
+            )}
+          </InboxNotificationList>
         ) : (
           <div className="p-2 w-[400px] text-center text-sm text-muted-foreground">
             No notification
