@@ -43,17 +43,12 @@ const InboxMenu = () => {
       <DropdownMenuContent align="end" className="w-auto">
         {inboxNotifications?.length > 0 ? (
           <InboxNotificationList>
-            {inboxNotifications?.map(
-              (inboxNotification) => (
-                console.log(inboxNotification),
-                (
-                  <InboxNotification
-                    key={inboxNotification.id}
-                    inboxNotification={inboxNotification}
-                  />
-                )
-              )
-            )}
+            {inboxNotifications?.map((inboxNotification) => (
+              <InboxNotification
+                key={inboxNotification.id}
+                inboxNotification={inboxNotification}
+              />
+            ))}
           </InboxNotificationList>
         ) : (
           <div className="p-2 w-[400px] text-center text-sm text-muted-foreground">
