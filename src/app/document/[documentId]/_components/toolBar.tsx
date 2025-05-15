@@ -72,7 +72,6 @@ const ToolBarButton = ({
 
 export default function ToolBar() {
   const { editor } = useEditorStore();
-  console.log("editor", editor);
   const sections: {
     label: string;
     icon: LucideIcon;
@@ -137,7 +136,7 @@ export default function ToolBar() {
         icon: CodeIcon,
         isActive: editor?.isActive("code"),
         onClick: () => editor?.chain().focus().toggleCode().run(),
-      }
+      },
     ],
     [
       {
