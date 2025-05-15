@@ -34,30 +34,24 @@ export async function POST(req: Request) {
     document.organizationId === (sessionClaims.o as { id: string })?.id
   );
 
-  console.log(
-    JSON.stringify(
-      {
-        isOwner,
-        isOrganizationMember,
-        sessionClaims: sessionClaims,
-        sessionClaimsOrgId: (sessionClaims.o as { id: string })?.id,
-        documentOrganizationId: document.organizationId || "no organizationId",
-        // sessionClaimsOrgId: sessionClaims.org_id || "no session claims",
-      },
-      null,
-      2
-    )
-  );
-
   if (!isOwner && !isOrganizationMember) {
     return new Response("Unauthorized", { status: 401 });
   }
+
+  const name = user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Anonymous";
+
+  const nameToNumber =  name.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+
+  const hue = Math.abs(nameToNumber) % 360;
+
+  const color = `hsl(${hue}, 80%, 60%)`; 
 
   const session = liveblocks.prepareSession(user.id, {
     userInfo: {
       name:
         user.fullName ?? user.primaryEmailAddress?.emailAddress ?? "Anonymous",
       avatar: user.imageUrl,
+      color,
     },
   });
   session.allow(room, session.FULL_ACCESS);
