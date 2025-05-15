@@ -40,11 +40,11 @@ export const RenameDialog = ({
       await rename({ id: documentId, title: title.trim() || "Untitled" });
       toast.success("The document has been successfully renamed.");
       setOpen(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error(
         "You don't have permission to rename this document. Only document owners and administrators can delete documents."
       );
-      console.log("Error renaming document:", error);
     } finally {
       setIsRenaming(false);
     }
